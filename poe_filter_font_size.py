@@ -2,18 +2,14 @@ import os
 import re
 import sys
 import argparse
+import json
 from pathlib import Path
 
-# Define the mapping for font size replacements
-font_size_mapping = {
-    28: 24,
-    32: 28,
-    35: 30,
-    38: 30,
-    40: 32,
-    42: 35,
-    45: 38
-}
+# Load the font size mapping from JSON file
+config_path = Path(__file__).parent / "font_sizes.json"
+with open(config_path, 'r') as f:
+    data = json.load(f)
+font_size_mapping = {int(k): v for k, v in data.items()}
 
 
 def update_font_sizes(file_path: Path, dry_run: bool = False) -> bool:
